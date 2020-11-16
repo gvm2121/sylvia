@@ -1,0 +1,23 @@
+{% extends './index.html' %}
+
+{% block contenidos %}
+{% for pregunta in preguntas %}
+<ul class="list-group">
+    <form action="{% url 'preguntas_guardadas_procesar' %}" method="POST">
+        {% csrf_token %}
+    <li class="list-group-item">
+       
+                <div class="d-flex justify-content-start" >
+                    <input type="hidden" value="{{pregunta.unico_pregunta}}" name="pregunta_numero">{{pregunta}}</input>
+                </div>
+            <div class="d-flex justify-content-end">
+        
+                <a href="{% url 'editar' pregunta.unico_pregunta  %}" class="btn btn-success btn-sm" name="accion" value="Editar">editar</a>
+                <input type="submit" class="btn btn-danger btn-sm" name="accion" value="Borrar">
+            </div>
+
+    </li>
+    </form>
+</ul>
+{% endfor %}
+{% endblock %}

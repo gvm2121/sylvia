@@ -1,0 +1,17 @@
+
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Tag</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for t in tabla_compartidos %}
+      <tr>
+        <td>{{t.usuario_a_compartir}}</td>
+        <td>{{t.tag_a_compartir}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>

@@ -1,0 +1,15 @@
+{% extends './index.html' %}
+
+{% block contenidos %}
+<form action="{% url 'guardar_pregunta_editada' %}" method="post">
+    {% csrf_token %}
+    {{ editar_formulario_alternativas.management_form }}
+    {{ editar_enunciado_formulario.management_form }}
+    {{ editar_enunciado_formulario }}
+    {{ editar_formulario_alternativas }}
+    
+   
+    <input type="hidden" name="unico" value="{{unico_pregunta}}">
+    <input type="submit" class="btn btn-success mt-2" name="accion" value="Actualizar">
+</form>
+{% endblock %}

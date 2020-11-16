@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+   
+    
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>     -->
+    <link rel="stylesheet" href="{% static 'js/jquery-ui-1.12.1.custom/jquery-ui.min.css' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/pruebas.js' %}"></script> -->
+
+    <title>Sylvia 1.0 - Generador de pruebas escritas</title>
+   
+</head>
+<body>
+<div class="container my-5">
+        <div class="row border">
+            <p>Sylvia 1.0v. Constructor de pruebas escritas</p><h3> {{ user.username }} -  {{ user.id }}  </h3>
+        </div>
+        
+     
+<div class="row">
+<div class="col-3 border">
+   
+        <ul class="list-group">
+
+                <a href="{% url 'index' %}">Inicio</a>
+                <a href="{% url 'crear_prueba' %}">Crear prueba</a>
+                <a href="{% url 'crear_pregunta' %}">Crear pregunta</a>
+                <a href="{% url 'preguntas_guardadas' %}">Preguntas Guardadas</a>
+                <a href="{% url 'crear_tag' %}">tags</a>
+                <a href="{% url 'compartir' %}">compartir</a>
+                <br>
+
+                <a href="{% url 'salir' %}">Salir</a>
+        </ul>
+</div>
+<div class="col-9 border">
+        <div class="navbar">
+            
+            
+        </div>
+        {% block contenidos %}
+                
+    TODO: Hay que hacer el sistema de login para que se guarde el usuario para poder filtrar después
+        {% endblock %}
+</div>        
+
+
+
+</div>
+
+
+</body>
+</html>

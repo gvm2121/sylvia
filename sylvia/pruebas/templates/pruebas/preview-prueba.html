@@ -1,0 +1,21 @@
+{% extends './index.html' %}
+
+
+{% block contenidos %}
+<h2>Preview</h2>
+{% for prueba in contenedor_final %}
+<hr>
+        {% for enum,pregunta in prueba %}
+               
+                {{enum}}.-{{ pregunta.enunciado }}<br>
+                {% for abc,alt in pregunta.alternativas_de_la_pregunta %}
+                {{abc}}) {{alt.texto}}.-  <br>
+                {% endfor %}
+        {% endfor %}
+
+       
+
+      
+{% endfor %}
+<a href="{% url 'generar_pdf' %}" class="btn btn-default">generar pdf</a>
+{% endblock %}

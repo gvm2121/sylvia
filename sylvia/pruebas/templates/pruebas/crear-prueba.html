@@ -1,0 +1,49 @@
+{% extends './index.html' %}
+
+{% block contenidos %}
+
+
+<form action="{% url 'generar_prueba' %}" method="POST">
+    {% csrf_token %}
+    {{ crear_prueba_formulario }}
+    
+<p>seleccione las preguntas:</p>
+  
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Usar</th>
+        <th scope="col">Enunciado</th>
+
+        <th scope="col">Fija</th>
+        <th scope="col">Tag</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pregunta in preguntas %}
+      <tr>
+        <th scope="row">1</th>
+        <td>
+          <div class="form-group form-check">
+          <input type="checkbox" name="{{ pregunta.unico_pregunta }}" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label"  for="exampleCheck1">Usar</label>
+            </div>
+          </td>
+        <td>{{ pregunta.enunciado }}</td>
+        <td>
+            <div class="form-group form-check">
+            <input type="checkbox" name="fija_{{ pregunta.unico_pregunta }}" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label"  for="exampleCheck1">Dejar pregunta fija</label>
+              </div>
+          </td>
+          <td>
+            {{ pregunta.tag }}
+            </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <input type="submit" class="btn btn-info" value="Generar">
+</form>
+{% endblock %}

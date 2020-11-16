@@ -1,0 +1,12 @@
+{% extends './index.html' %}
+
+{% block contenidos %}
+<form action="{% url 'crear_pregunta_procesar' %}" method="post">
+    {% csrf_token %}
+    {{ crear_pregunta_formulario }}
+    {{ formulario_alternativas }}
+    {{ formulario_alternativas.errors }}
+   
+    <input type="submit" class="btn btn-success mt-2" value="Submit">
+</form>
+{% endblock %}

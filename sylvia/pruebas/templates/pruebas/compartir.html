@@ -1,0 +1,56 @@
+{% extends './index.html' %}
+
+
+{% block contenidos %}
+<h3>Estamos en compartir </h3>
+<form action="{% url 'guardar_compartido' %}" method="post">
+    {% csrf_token %}
+    {{ formulario_compartir }}
+    <input type="submit" class="btn btn-success mt-2" value="Agregar">
+</form>
+
+<h2>Se han compartido los siguientes tags</h2>
+<div id="compartidos">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>A quien</th>
+        <th>Hoy</th>
+        <th>Acciones</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in tabla_compartidos %}
+      <tr>
+
+        <td>{{ t.usuario_a_compartir}}</td>
+        <td>{{ t.tag_a_compartir}}</td>
+        <td>
+          <form action="{% url 'eliminar_permiso' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name='id' value="{{t.numero_compartido}}">
+            <input type="submit" class="btn btn-danger" value="Eliminar">
+          </form>
+        </td>
+      
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+
+<script>
+    
+    $(function() {
+    $( "#id_usuario_a_compartir" ).autocomplete({
+        source: "{% url 'compartir_usuario' %}",
+        
+        });
+    });
+
+</script>
+
+{% endblock %}

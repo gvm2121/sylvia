@@ -1,0 +1,23 @@
+{% extends './index.html' %}
+{% block contenidos %}
+<form action="{% url 'guardar_tag' %}" method="post">
+    {% csrf_token %}
+    {{ crear_tags_formulario}}
+    <input type="submit" class="btn btn-success mt-2" value="Submit">
+</form>
+
+{% for etiqueta in etiquetas %}
+<ul>
+<li>{{etiqueta.tema}}</li>
+</ul>
+{% endfor %}
+
+<p>Te compartieron las etiquetas: </p>
+{% for e in etiquetas_externas %}
+<ul>
+<li>{{e.tag_a_compartir}} compartida por {{e.yo}}</li>
+</ul>
+{% endfor %}
+
+
+{% endblock %}
