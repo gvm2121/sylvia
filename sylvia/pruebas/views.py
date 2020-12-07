@@ -202,6 +202,7 @@ def generar_pdf(request):
     
     archivo_salida.write("\\usepackage{tikz}")
     archivo_salida.write("\\newcommand*\\circled[1]{\\tikz[baseline=(char.base)]{\\node[shape=circle,draw,inner sep=1.2pt] (char) {#1};}}")
+    archivo_salida.write("\\newcommand*\\circledblack[1]{\\tikz[baseline=(char.base)]{\\node[shape=circle,draw,inner sep=2pt,fill=black!50] (char) {#1};}}")
     
     archivo_salida.write("\\usepackage[T1]{fontenc}")
     archivo_salida.write("\\usepackage{lipsum}")
@@ -222,7 +223,7 @@ def generar_pdf(request):
             archivo_salida.write("\\item {0}".format(prueba[str(i)][j]['enunciado']))
             alternativas = json.loads(prueba[str(i)][j]['alternativas_json'])
             archivo_salida.write("\\begin{enumerate}")
-            for k in range(0,4):
+            for k in range(0,5):
                 archivo_salida.write("\\item {0}".format(alternativas[k]['fields']['texto']))
             archivo_salida.write("\\end{enumerate}")
         archivo_salida.write("\\end{enumerate}")
@@ -253,7 +254,30 @@ def generar_pdf(request):
             
             
         archivo_salida.write("\\end{enumerate}")
-        archivo_salida.write("\\newpage")        
+        archivo_salida.write("\\newpage")
+
+    #Acá comienza la hoja de respuestas correctas
+
+    for i in range(1,len(prueba)-1): #iterador_pruebas
+        archivo_salida.write("\\Large\\textbf{Plantilla de respuestas correctas}")
+        archivo_salida.write("\\begin{enumerate}")
+        for j in range(0,cantidad_preguntas):
+            alternativas_2 = json.loads(prueba[str(i)][j]['alternativas_json'])
+            texto=""
+            for k,l in zip(range(0,5),['a','b','c','d','e']):
+                
+                if alternativas_2[k]['fields']['es_correcta']==False:
+                    texto_formateado = "\\circled{{\\begin{{small}} {} \\end{{small}}}} ".format(l) 
+                    texto = texto + texto_formateado
+                else:
+                    texto_formateado = "\\circledblack{{\\begin{{small}} {} \\end{{small}}}} ".format(l)
+                    texto = texto + texto_formateado
+            texto_final = "\\item " + texto
+            print("texto_final*******  ", texto_final)
+            archivo_salida.write(texto_final)
+        archivo_salida.write("\\end{enumerate}")
+        archivo_salida.write("\\newpage")
+            
     
 
 

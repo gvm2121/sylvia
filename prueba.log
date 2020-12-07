@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.7.22)  7 DEC 2020 01:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.7.22)  7 DEC 2020 18:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -503,30 +503,27 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 1.
-(/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
-File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
-) [1
+[1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8
-] [9]
-(./prueba.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6]
+[7] [8] [9] [10] (./prueba.aux) ) 
 Here is how much of TeX's memory you used:
- 12945 strings out of 494923
- 252579 string characters out of 6180742
- 393184 words of memory out of 5000000
- 16023 multiletter control sequences out of 15000+600000
+ 12455 strings out of 494923
+ 247540 string characters out of 6180742
+ 395019 words of memory out of 5000000
+ 15536 multiletter control sequences out of 15000+600000
  9454 words of font info for 27 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,7n,54p,6107b,587s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/gonzalo/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen
-/ec/ecrm1095.600pk> </home/gonzalo/.texlive2017/texmf-var/fonts/pk/ljfour/jknap
-pen/ec/ecrm1728.600pk> </home/gonzalo/.texlive2017/texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecrm1200.600pk> </home/gonzalo/.texlive2017/texmf-var/fonts/pk/ljfour
-/jknappen/ec/ecbx1728.600pk>
-Output written on prueba.pdf (9 pages, 36813 bytes).
+ 55i,7n,54p,5060b,615s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/gonzalo/.texlive2017/texmf-var/fonts/p
+k/ljfour/jknappen/ec/ecrm1095.600pk> </home/gonzalo/.texlive2017/texmf-var/font
+s/pk/ljfour/jknappen/ec/ecrm1728.600pk> </home/gonzalo/.texlive2017/texmf-var/f
+onts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/gonzalo/.texlive2017/texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk>
+Output written on prueba.pdf (10 pages, 37826 bytes).
 PDF statistics:
- 145 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 146 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
