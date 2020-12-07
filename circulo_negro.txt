@@ -1,0 +1,11 @@
+\documentclass{article}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+ 
+ \newcommand*\circledblack[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt,fill=black!50] (char) {#1};}}          
+            
+\begin{document}
+Numbers aligned with the text:  \circled{1} \circled{2} \circled{3} \circledblack{3} end.
+\end{document}
