@@ -68,7 +68,7 @@ def crear_prueba(request):
 
 
 def preguntas_guardadas(request):
-    preguntas=PreguntaModel.objects.filter(usuario=request.user)
+    preguntas=PreguntaModel.objects.filter(usuario=request.user).order_by('unico_pregunta')
     return render(request,'pruebas/preguntas-guardadas.html',{'preguntas':preguntas})
 
 def salir(request):
