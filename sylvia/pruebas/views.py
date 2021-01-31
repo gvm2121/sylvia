@@ -199,6 +199,7 @@ def generar_pdf(request):
     archivo_salida = open("prueba.tex","w")
     archivo_salida.write("\\documentclass[12pt,oneside,letterpaper]{article}")
     archivo_salida.write("\\usepackage[utf8x]{inputenc}")
+    archivo_salida.write("\\usepackage{multicol}")
     
     archivo_salida.write("\\usepackage{tikz}")
     archivo_salida.write("\\newcommand*\\circled[1]{\\tikz[baseline=(char.base)]{\\node[shape=circle,draw,inner sep=1.2pt] (char) {#1};}}")
@@ -208,6 +209,8 @@ def generar_pdf(request):
     archivo_salida.write("\\usepackage{lipsum}")
     archivo_salida.write("\\usepackage[margin=3cm]{geometry}")
     archivo_salida.write("\\begin{document}")
+    
+    
     archivo_salida.write("\\begin{center}")
     archivo_salida.write("\Large\\textbf{Primera Prueba Global}")
     archivo_salida.write("\\end{center}")
@@ -216,7 +219,10 @@ def generar_pdf(request):
     archivo_salida.write("curso :  & .....................................\\\\")
     archivo_salida.write("fecha :  & .....................................\\\\")
     archivo_salida.write("\\end{tabular}")
+    
+    
     for i in range(1,len(prueba)-1): #iterador_pruebas
+        
         archivo_salida.write("\\begin{enumerate}")
         for j in range(0,cantidad_preguntas):
             
@@ -227,12 +233,15 @@ def generar_pdf(request):
                 archivo_salida.write("\\item {0}".format(alternativas[k]['fields']['texto']))
             archivo_salida.write("\\end{enumerate}")
         archivo_salida.write("\\end{enumerate}")
+        
         archivo_salida.write("\\newpage")        
+    
     
     
     #lo que hay que hacer ahora, es trabajar en el latex para que quede todas las pruebas juntas con su respectivo encabezado
     for i in range(1,len(prueba)-1): #iterador_pruebas
         archivo_salida.write("\Large\\textbf{Primera Prueba Global - Solucionario, no entregar}")
+        
         archivo_salida.write("\\begin{enumerate}")
         for j in range(0,cantidad_preguntas):
             
@@ -241,12 +250,15 @@ def generar_pdf(request):
             
             
         archivo_salida.write("\\end{enumerate}")
+       
         archivo_salida.write("\\newpage")
     
     # Acá comienza la hoja de respuestas        
     for i in range(1,len(prueba)-1): #iterador_pruebas
         archivo_salida.write("\Large\\textbf{Primera Prueba Global - Hoja de respuestas}")
+        archivo_salida.write("\\begin{multicols}{2}")
         archivo_salida.write("\\begin{enumerate}")
+
         for j in range(0,cantidad_preguntas):
             
             archivo_salida.write("\\item \\circled{a} \\circled{\\begin{small} b \\end{small}} \\circled{c} \\circled{\\begin{small} d \\end{small}} \\circled{e} ")
@@ -254,12 +266,14 @@ def generar_pdf(request):
             
             
         archivo_salida.write("\\end{enumerate}")
+        archivo_salida.write("\\end{multicols}{2}")
         archivo_salida.write("\\newpage")
 
     #Acá comienza la hoja de respuestas correctas
 
     for i in range(1,len(prueba)-1): #iterador_pruebas
         archivo_salida.write("\\Large\\textbf{Plantilla de respuestas correctas}")
+        archivo_salida.write("\\begin{multicols}{2}")
         archivo_salida.write("\\begin{enumerate}")
         for j in range(0,cantidad_preguntas):
             alternativas_2 = json.loads(prueba[str(i)][j]['alternativas_json'])
@@ -276,13 +290,8 @@ def generar_pdf(request):
             print("texto_final*******  ", texto_final)
             archivo_salida.write(texto_final)
         archivo_salida.write("\\end{enumerate}")
+        archivo_salida.write("\\end{multicols}{2}")
         archivo_salida.write("\\newpage")
-            
-    
-
-
-
-    
     
     archivo_salida.write("\\end{document}")
     archivo_salida.close()
