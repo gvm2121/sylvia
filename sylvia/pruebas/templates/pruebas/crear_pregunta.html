@@ -1,11 +1,17 @@
 {% extends './index.html' %}
 
 {% block contenidos %}
+<h3 class="row">
+    {{ formulario_alternativas.non_form_errors }}
+    {{ crear_pregunta_formulario.non_form_errors }}
+
+</h3>
 <form action="{% url 'crear_pregunta_procesar' %}" method="post">
     {% csrf_token %}
     {{ crear_pregunta_formulario }}
     {{ formulario_alternativas }}
-    {{ formulario_alternativas.errors }}
+
+
    
     <input type="submit" class="btn btn-success mt-2" value="Submit">
 </form>

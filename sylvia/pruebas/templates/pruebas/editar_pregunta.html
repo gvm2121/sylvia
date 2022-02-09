@@ -1,6 +1,11 @@
 {% extends './index.html' %}
 
 {% block contenidos %}
+<h3 class="row">
+    {{ editar_formulario_alternativas.non_form_errors }}
+    {{ editar_enunciado_formulario.non_form_errors }}
+
+</h3>
 <form action="{% url 'guardar_pregunta_editada' %}" method="post">
     {% csrf_token %}
     {{ editar_formulario_alternativas.management_form }}

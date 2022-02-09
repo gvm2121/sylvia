@@ -8,6 +8,7 @@
     {{ crear_prueba_formulario }}
     
 <p>seleccione las preguntas:</p>
+<div class="row">ACA VA EL BUSCADOR</div>
   
   <table class="table">
     <thead class="thead-light">
@@ -21,6 +22,7 @@
       </tr>
     </thead>
     <tbody>
+      {% if preguntas %}
       {% for pregunta in preguntas %}
       <tr>
         <th scope="row">1</th>
@@ -42,6 +44,35 @@
             </td>
       </tr>
       {% endfor %}
+      {% endif %}
+      {% if preguntas_compartidas %}
+
+      {% for pregunta in preguntas_compartidas %}
+      <tr class="bg-warning">
+        <th scope="row">1</th>
+        <td>
+          <div class="form-group form-check">
+          <input type="checkbox" name="{{ pregunta.unico_pregunta }}" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label"  for="exampleCheck1">Usar</label>
+            </div>
+          </td>
+        <td>{{ pregunta.enunciado }}</td>
+        <td>
+            <div class="form-group form-check">
+            <input type="checkbox" name="fija_{{ pregunta.unico_pregunta }}" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label"  for="exampleCheck1">Dejar pregunta fija</label>
+              </div>
+          </td>
+          <td>
+            {{ pregunta.tag }}
+            </td>
+      </tr>
+      {% endfor %}
+    
+      {% endif%}
+
+
+
     </tbody>
   </table>
   <input type="submit" class="btn btn-info" value="Generar">

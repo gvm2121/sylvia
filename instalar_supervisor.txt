@@ -1,0 +1,13 @@
+sudo apt-get install supervisor
+	 	 	
+sudo nano /etc/supervisor/conf.d/web.conf
+
+[program:web]
+command= /home/jair/apolo/web/deploy/gunicorn_start.sh
+user=jair
+stdout_logfile= /home/jair/apolo/web/logs/supervisor.log
+redirect_stderr= true
+environment=LANG= en_US.UTF-8,LC_ALL=en_US.UTF-8
+
+sudo supervisorctl reread
+sudo supervisorctl update

@@ -82,10 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sylvia_db',
-        'USER': 'gvm',
+        'USER': 'gonzalo',
         'PASSWORD': 'gonzalovera26',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '5432', #cambiamos el puerto para que no choque con odoo
     }
 }
 

@@ -18,7 +18,7 @@ def index(request):
 
 def crear_pregunta(request):
     context={}
-    AlternativasFormSet = formset_factory(AlternativaForm,extra=5)
+    AlternativasFormSet = formset_factory(AlternativaForm,extra=5, formset=PreguntaCompletaFormset) #el PreguntaCompletaFormset es para validar el formulario
     context['formulario_alternativas'] = AlternativasFormSet()
     context['crear_pregunta_formulario']=CrearPreguntaForm(user=request.user)
     
@@ -26,15 +26,12 @@ def crear_pregunta(request):
     return render(request,'pruebas/crear_pregunta.html',context)
 
 def crear_pregunta_procesar(request):
+    context={}
     if request.method == 'POST':
-        
         form = CrearPreguntaForm(request.POST,user=request.user)
-        AlternativasFormSet = formset_factory(AlternativaForm,extra=5)
+        AlternativasFormSet = formset_factory(AlternativaForm,extra=5,formset=PreguntaCompletaFormset)
         formularioAlternativa = AlternativasFormSet(request.POST or None)
-        
-        
         if form.is_valid() and formularioAlternativa.is_valid():
-            
             pregunta_enunciado = form.cleaned_data['enunciado']
             pregunta_tag = form.cleaned_data['tag']
             fs = form.save(commit=False)
@@ -48,28 +45,38 @@ def crear_pregunta_procesar(request):
                     es_correcta = alternativa_correcta,
                     enunciado_alternativa = fs)
                 Alternativa.save()
-             
             return redirect('crear_pregunta')
         else:
-            print('Hay un error en el formulario')
-            print(formularioAlternativa.errors)
-
-            return redirect('crear_pregunta')
+            #mandamos los formularios devuelta a la vista con los errores en él
+            context['formulario_alternativas'] = formularioAlternativa
+            context['crear_pregunta_formulario']=form
+            return render(request,'pruebas/crear_pregunta.html',context)
 
     return render(request,'pruebas/crear_pregunta.html',context)
 
 
 
 def crear_prueba(request):
-    crear_prueba_formulario=CrearPruebaForm()
-    preguntas=PreguntaModel.objects.filter(usuario=request.user)
-    #preguntas = PreguntaModel.objects.raw(''' select unico_pregunta,enunciado,alt_a,alt_b,alt_c,alt_d,alt_e,alt_correcta from pruebas_preguntamodel p where p.usuario_id=%s UNION select unico_pregunta,enunciado,alt_a,alt_b,alt_c,alt_d,alt_e,alt_correcta  from pruebas_preguntamodel p join pruebas_compartirmodel c on (p.tag_id=c.tag_a_compartir_id) where c.usuario_a_compartir_id=%s; ''',[request.user.id,request.user.id])
-    return render(request,'pruebas/crear-prueba.html',{'crear_prueba_formulario':crear_prueba_formulario,'preguntas':preguntas})
+    data = {}
+    data['crear_prueba_formulario'] = CrearPruebaForm()
+    tag_compartidos = CompartirModel.objects.filter(usuario_a_compartir = request.user).values_list('tag_a_compartir') or None
+    data['preguntas'] = PreguntaModel.objects.filter(usuario=request.user).order_by('unico_pregunta')
+    if tag_compartidos:
+        preguntas_compartidas = PreguntaModel.objects.filter(tag__in = tag_compartidos)
+        data['preguntas_compartidas'] = preguntas_compartidas
+    
+    return render(request,'pruebas/crear-prueba.html',data)
 
 
 def preguntas_guardadas(request):
-    preguntas=PreguntaModel.objects.filter(usuario=request.user).order_by('unico_pregunta')
-    return render(request,'pruebas/preguntas-guardadas.html',{'preguntas':preguntas})
+    data = {}
+    tag_compartidos = CompartirModel.objects.filter(usuario_a_compartir = request.user).values_list('tag_a_compartir') or None
+    preguntas = PreguntaModel.objects.filter(usuario=request.user).order_by('unico_pregunta')
+    data['preguntas'] = preguntas
+    if tag_compartidos:
+        preguntas_compartidas = PreguntaModel.objects.filter(tag__in = tag_compartidos)
+        data['preguntas_compartidas'] = preguntas_compartidas
+    return render(request,'pruebas/preguntas-guardadas.html',data)
 
 def salir(request):
     request.session.flush()
@@ -138,11 +145,6 @@ def guardar_pregunta_editada(request):
         FormularioAlternativaClass = inlineformset_factory(PreguntaModel,AlternativaModel,fields=('texto','es_correcta'), extra=0,can_delete=False)
         Enunciado_desde_form = EnunciadoForm(request.POST, instance=enunciado)
         formularioAlternativa = FormularioAlternativaClass(request.POST,instance=enunciado)
-        
-        print('Enunciado_desde_form ',Enunciado_desde_form.errors)
-        print('Enunciado_desde_form.is_valid() ',Enunciado_desde_form.is_valid())
-
-
         if Enunciado_desde_form.is_valid() and formularioAlternativa.is_valid():
             Enunciado_desde_form.save()
             formularioAlternativa.save()

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea,CharField, TextInput, Select
+from django.forms import ModelForm, Textarea,CharField, TextInput, Select, ValidationError
 from pruebas.models import *
 from django import forms
 from django.contrib.auth.models import User
@@ -10,10 +10,7 @@ class CrearPreguntaForm(ModelForm):
         self.user=kwargs.pop('user')
         super(CrearPreguntaForm, self).__init__(*args, **kwargs)
         self.fields['tag'].queryset = TagModel.objects.filter(usuario=self.user)
-        
-        
     class Meta:
-        
         model=PreguntaModel
         exclude=['usuario','alternativa']
         #fields='__all__'
@@ -62,7 +59,7 @@ class AlternativaForm(ModelForm):
     class Meta:
         model=AlternativaModel
         fields=['texto','es_correcta']
-    
+ 
 
 class EnunciadoForm(ModelForm):
     #Este solo se usa en la vista para editar las preguntas
@@ -70,6 +67,18 @@ class EnunciadoForm(ModelForm):
         model=PreguntaModel
         fields=['enunciado','explicacion']
 
+from django.forms import BaseFormSet
+
+class PreguntaCompletaFormset(BaseFormSet):
+    
+    def clean(self):
+        es_correcta_list = []
+        for f in self.forms:
+            es_correcta = f.cleaned_data.get("es_correcta")
+            es_correcta_list.append(es_correcta)
+        if not True in es_correcta_list:
+            raise ValidationError("¡Al menos de una de las alternativas debe estar marcada como correcta!")
+                    
 
 #aca hay que 
 #pensar en una lógica de formulario para compartir las tags entre profesores y colegios
