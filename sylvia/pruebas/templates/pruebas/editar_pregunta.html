@@ -1,3 +1,4 @@
+
 {% extends './index.html' %}
 
 {% block contenidos %}
@@ -8,10 +9,57 @@
 </h3>
 <form action="{% url 'guardar_pregunta_editada' %}" method="post">
     {% csrf_token %}
+    <div class="row">
+        <div class="col-lg-6">
+    {{ editar_enunciado_formulario.tag.label }}
+        </div>
+        <div class="col-lg-6">
+    {{ editar_enunciado_formulario.tag }}
+        </div>
+    </div>
+ 
+   {{ editar_enunciado_formulario.management_form }}
+    <div class="row d-flex flex-column">
+        <div class="P-2">
+            {{ editar_enunciado_formulario.enunciado.label }}
+        </div>
+        <div class="P-2">
+            {{ editar_enunciado_formulario.enunciado }}
+        </div>
+    </div>
+        <div class="row d-flex flex-column">
+            <div class="p-2">
+                {{ editar_enunciado_formulario.explicacion.label }}
+            </div>
+            <div class="p-2">
+                {{ editar_enunciado_formulario.explicacion }}
+            </div>
+        </div>
+
+
     {{ editar_formulario_alternativas.management_form }}
-    {{ editar_enunciado_formulario.management_form }}
-    {{ editar_enunciado_formulario }}
-    {{ editar_formulario_alternativas }}
+    {% for f in editar_formulario_alternativas %}
+    <!-- estas lineas de abajo es para que no levante error id_required -->
+    {% for hidden in f.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <div class="row border p-2">
+        <div class="row">
+            <div class="col-lg-6">
+               {{ f.texto.label }} 
+               {{ f.texto }} 
+            </div>
+            <div class="col-lg-6">
+           {{ f.es_correcta.label }}
+           {{ f.es_correcta }}
+           </div>
+        </div>
+            {{ f.id_alternativa}}
+
+    
+   </div>
+
+    {% endfor %}
     
    
     <input type="hidden" name="unico" value="{{unico_pregunta}}">

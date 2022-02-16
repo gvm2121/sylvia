@@ -13,14 +13,13 @@ class TagModel(models.Model):
     def __str__(self):
         return self.tema
 
-# Create your models here.
 #este model crea la pregunta que puede ser utilizada en cualquier parte
 
 
 
 class PreguntaModel(models.Model):
     usuario=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-    tag=models.ForeignKey(TagModel,on_delete=models.CASCADE,null=True)
+    tag=models.ManyToManyField(TagModel)
     unico_pregunta=models.AutoField(primary_key=True)
     enunciado = models.TextField()
     explicacion = models.TextField(null=True)

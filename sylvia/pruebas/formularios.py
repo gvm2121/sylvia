@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea,CharField, TextInput, Select, ValidationError
+from django.forms import CheckboxInput, ModelForm, Textarea,CharField, TextInput, Select, ValidationError,SelectMultiple,BaseInlineFormSet
 from pruebas.models import *
 from django import forms
 from django.contrib.auth.models import User
@@ -16,6 +16,7 @@ class CrearPreguntaForm(ModelForm):
         #fields='__all__'
         
         widgets = {
+            'tag' : SelectMultiple(attrs={'class':'form-control'}),
             'enunciado': Textarea(attrs={'class':'form-control'}),
             'explicacion': Textarea(attrs={'class':'form-control'})            
         }
@@ -33,10 +34,8 @@ class CrearTagsForm(ModelForm):
         fields=('tema',)
 
 class FormularioCompartirAux(forms.Form):
-    usuario_a_compartir = forms.IntegerField()
+    usuario_a_compartir = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     tag_a_compartir = forms.IntegerField()
-    #tag_a_compartir = forms.ModelChoiceField(widget=forms.Textarea(attrs={'class':'form-control'}))
-    #tag_a_compartir = forms.ModelChoiceField()
 
 class FormularioCompartir(ModelForm):
     def __init__(self,*args, **kwargs):
@@ -49,7 +48,7 @@ class FormularioCompartir(ModelForm):
         #exclude=['yo',]
         fields=['usuario_a_compartir','tag_a_compartir']
         widgets = {
-            'usuario_a_compartir': Textarea(attrs={'class':'form-control'}),
+            'usuario_a_compartir': TextInput(attrs={'class':'form-control'}),
              'tag_a_compartir': Select(attrs={'class':'form-control'})
             
         }
@@ -59,6 +58,10 @@ class AlternativaForm(ModelForm):
     class Meta:
         model=AlternativaModel
         fields=['texto','es_correcta']
+        widgets = {
+            'texto': Textarea(attrs={'class':'form-control'}),
+            'es_correcta': CheckboxInput(attrs={'class':'form-control'})            
+        }
  
 
 class EnunciadoForm(ModelForm):
@@ -70,15 +73,26 @@ class EnunciadoForm(ModelForm):
 from django.forms import BaseFormSet
 
 class PreguntaCompletaFormset(BaseFormSet):
-    
     def clean(self):
         es_correcta_list = []
         for f in self.forms:
             es_correcta = f.cleaned_data.get("es_correcta")
             es_correcta_list.append(es_correcta)
         if not True in es_correcta_list:
-            raise ValidationError("¡Al menos de una de las alternativas debe estar marcada como correcta!")
+            raise ValidationError("¡Una y solo una de las alternativas es correcta")
                     
+
+class PreguntaCompletaFormsetEditada(BaseInlineFormSet):
+    def clean(self):
+        print(self.forms)
+        es_correcta_list = []
+        for f in self.forms:
+            es_correcta = f.cleaned_data.get("es_correcta")
+            es_correcta_list.append(es_correcta)
+        if not True in es_correcta_list:
+            raise ValidationError("¡Una y solo una de las alternativas es correcta")
+
+
 
 #aca hay que 
 #pensar en una lógica de formulario para compartir las tags entre profesores y colegios

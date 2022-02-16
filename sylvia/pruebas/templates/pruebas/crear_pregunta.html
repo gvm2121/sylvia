@@ -8,11 +8,56 @@
 </h3>
 <form action="{% url 'crear_pregunta_procesar' %}" method="post">
     {% csrf_token %}
-    {{ crear_pregunta_formulario }}
-    {{ formulario_alternativas }}
+    <div class="row">
+        <div class="col-lg-6">
+    {{ crear_pregunta_formulario.tag.label }}
+        </div>
+        <div class="col-lg-6">
+    {{ crear_pregunta_formulario.tag }}
+        </div>
+    </div>
+    <div class="row d-flex flex-column">
+            <div class="p-2">
+        {{ crear_pregunta_formulario.enunciado.label }}
+            </div>
+            <div class="p-2">
+        {{ crear_pregunta_formulario.enunciado }}
+            </div>
+    </div>
+    <div class="row d-flex flex-column">
+        <div class="p-2">
+        {{ crear_pregunta_formulario.explicacion.label }}
+        </div>
+        <div class="p-2">
+        {{ crear_pregunta_formulario.explicacion }}
+        </div>
+    </div>
+    <hr>
+        
+    
+    {{ formulario_alternativas.management_form }}
+     {% for f in formulario_alternativas %}
+     <div class="row border p-2">
+         <div class="row">
+             <div class="col-lg-6">
+                {{ f.texto.label }}
+                {{ f.texto }}  
+             </div>
+             <div class="col-lg-6">
+            {{ f.es_correcta.label }}
+            {{ f.es_correcta }}
+            </div>
+         </div>
+     
+     <!-- {{ f.texto }} -->
+     
+    </div>
 
-
-   
+     {% endfor %}
+ 
     <input type="submit" class="btn btn-success mt-2" value="Submit">
 </form>
+
+
+
 {% endblock %}

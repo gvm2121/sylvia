@@ -19,17 +19,16 @@ def index(request):
 def crear_pregunta(request):
     context={}
     AlternativasFormSet = formset_factory(AlternativaForm,extra=5, formset=PreguntaCompletaFormset) #el PreguntaCompletaFormset es para validar el formulario
-    context['formulario_alternativas'] = AlternativasFormSet()
-    context['crear_pregunta_formulario']=CrearPreguntaForm(user=request.user)
-    
+    context['crear_pregunta_formulario']=CrearPreguntaForm(user=request.user) #Crea el encabezado
+    context['formulario_alternativas'] = AlternativasFormSet() #Crea un paquete de 5 preguntas
     
     return render(request,'pruebas/crear_pregunta.html',context)
 
 def crear_pregunta_procesar(request):
     context={}
     if request.method == 'POST':
-        form = CrearPreguntaForm(request.POST,user=request.user)
-        AlternativasFormSet = formset_factory(AlternativaForm,extra=5,formset=PreguntaCompletaFormset)
+        form = CrearPreguntaForm(request.POST,user=request.user) #creamos el enunciado
+        AlternativasFormSet = formset_factory(AlternativaForm,extra=5,formset=PreguntaCompletaFormset) #crea un paquete de 5 formularios tipo alternativa
         formularioAlternativa = AlternativasFormSet(request.POST or None)
         if form.is_valid() and formularioAlternativa.is_valid():
             pregunta_enunciado = form.cleaned_data['enunciado']
@@ -43,7 +42,8 @@ def crear_pregunta_procesar(request):
                 Alternativa = AlternativaModel(
                     texto = alternativa_texto,
                     es_correcta = alternativa_correcta,
-                    enunciado_alternativa = fs)
+                    enunciado_alternativa = fs
+                    )
                 Alternativa.save()
             return redirect('crear_pregunta')
         else:
@@ -100,7 +100,7 @@ def guardar_tags(request):
             fs.tema=tema
             fs.usuario=request.user
             fs.save()
-            return redirect('index')
+            return redirect('crear_tag')
 
     # if a GET (or any other method) we'll create a blank form
         else:
@@ -112,16 +112,12 @@ def guardar_tags(request):
 def procesar(request):
     if request.method == 'POST':
         algo=request.POST.copy()
-        
     return HttpResponse('procesar')
 
 
 def preguntas_guardadas_procesar(request):
-    
     if request.method == 'POST':
         preguntas_edit=request.POST.copy()
-        
-        
         if preguntas_edit['accion']=='Borrar':
             pregunta_borrar=PreguntaModel.objects.get(usuario=request.user,unico_pregunta=preguntas_edit['pregunta_numero'])
             pregunta_borrar.delete()
@@ -142,13 +138,20 @@ def guardar_pregunta_editada(request):
     enunciado = PreguntaModel.objects.get(unico_pregunta=copia['unico'])
     
     if request.method=="POST" and copia['accion']=='Actualizar':
-        FormularioAlternativaClass = inlineformset_factory(PreguntaModel,AlternativaModel,fields=('texto','es_correcta'), extra=0,can_delete=False)
+        FormularioAlternativaClass = inlineformset_factory(PreguntaModel,AlternativaModel,fields=('texto','es_correcta'), extra=0,can_delete=False,formset=PreguntaCompletaFormsetEditada)
         Enunciado_desde_form = EnunciadoForm(request.POST, instance=enunciado)
+        #Enunciado_desde_form = EnunciadoForm(request.POST)
         formularioAlternativa = FormularioAlternativaClass(request.POST,instance=enunciado)
+        #formularioAlternativa = FormularioAlternativaClass(request.POST)
         if Enunciado_desde_form.is_valid() and formularioAlternativa.is_valid():
             Enunciado_desde_form.save()
             formularioAlternativa.save()
-    
+        else:
+            context={}
+            FormularioAlternativa = inlineformset_factory(PreguntaModel,AlternativaModel,fields=('texto','es_correcta','enunciado_alternativa'), extra=0,can_delete=False)
+            context['editar_formulario_alternativas'] = FormularioAlternativa(instance=enunciado)
+            context['editar_enunciado_formulario']=EnunciadoForm(instance=enunciado)
+            return render(request,'pruebas/editar_pregunta.html',context)
     return redirect('preguntas_guardadas')
 
 
@@ -374,5 +377,9 @@ def eliminar_permiso(request):
     i=request.POST.get('id')
     n = CompartirModel.objects.filter(yo=request.user.id,numero_compartido=i)
     n.delete()
-    return redirect('compartir') 
+    return redirect('compartir')
 
+def eliminar_tag(request,tag_id):
+    a = TagModel.objects.get(id_tag=tag_id)
+    a.delete()
+    return redirect('crear_tag')

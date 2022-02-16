@@ -6,13 +6,17 @@
 <form action="{% url 'generar_prueba' %}" method="POST">
     {% csrf_token %}
     {{ crear_prueba_formulario }}
-    
-<p>seleccione las preguntas:</p>
-<div class="row">ACA VA EL BUSCADOR</div>
+  <hr>
+  <hr> 
+<p>Seleccione las preguntas:</p>
+<div class="row justify-content-center my-2">
+  <input id="input_buscador" type="text" class="form-control col-lg-6" placeholder="buscar..." onkeyup="Buscar()">
   
-  <table class="table">
+</div>
+  
+  <table class="table" >
     <thead class="thead-light">
-      <tr>
+      <tr id="pregunta">
         <th scope="col">#</th>
         <th scope="col">Usar</th>
         <th scope="col">Enunciado</th>
@@ -21,7 +25,7 @@
         <th scope="col">Tag</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="preguntas">
       {% if preguntas %}
       {% for pregunta in preguntas %}
       <tr>
@@ -77,4 +81,23 @@
   </table>
   <input type="submit" class="btn btn-info" value="Generar">
 </form>
+<script>
+  function Buscar() {
+    // Declare variables
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('input_buscador');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("preguntas");
+    tr = ul.getElementsByTagName('tr');
+    for (i = 0; i < tr.length; i++) {
+      a = tr[i].getElementsByTagName("td")[1];
+      txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+  </script>
 {% endblock %}

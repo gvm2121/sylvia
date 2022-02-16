@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Python: Django",
             "type": "python",
@@ -11,8 +12,9 @@
             "program": "/home/gonzalo/Documentos/sylvia_main/sylvia/manage.py",
             "args": [
                 "runserver",
-                "--noreload"
+                // "--noreload"
             ],
+            "restart":true,
             "django": true
         }
     ]

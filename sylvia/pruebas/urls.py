@@ -8,6 +8,7 @@ urlpatterns = [
     path('crear-prueba', views.crear_prueba, name='crear_prueba'),
     path('preguntas-guardadas', views.preguntas_guardadas, name='preguntas_guardadas'),
     path('crear-tag', views.crear_tags, name='crear_tag'),
+    path('eliminar-tag/<int:tag_id>/', views.eliminar_tag, name='eliminar_tag'),
     path('guardar-tag', views.guardar_tags, name='guardar_tag'),
     path('salir', views.salir, name='salir'),
     path('generar-prueba', views.generar_prueba, name='generar_prueba'),

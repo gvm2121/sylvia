@@ -8,7 +8,7 @@
 
 {% for etiqueta in etiquetas %}
 <ul>
-<li>{{etiqueta.tema}}</li>
+<li>{{etiqueta.tema}}   <a href="{% url 'eliminar_tag' etiqueta.id_tag %}" class="badge badge-pill badge-danger">eliminar</a> </li> 
 </ul>
 {% endfor %}
 
