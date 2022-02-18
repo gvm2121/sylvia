@@ -31,11 +31,13 @@ def crear_pregunta_procesar(request):
         AlternativasFormSet = formset_factory(AlternativaForm,extra=5,formset=PreguntaCompletaFormset) #crea un paquete de 5 formularios tipo alternativa
         formularioAlternativa = AlternativasFormSet(request.POST or None)
         if form.is_valid() and formularioAlternativa.is_valid():
-            pregunta_enunciado = form.cleaned_data['enunciado']
+            #pregunta_enunciado = form.cleaned_data['enunciado']
             pregunta_tag = form.cleaned_data['tag']
             fs = form.save(commit=False)
             fs.usuario=request.user
             fs.save()
+            fs.tag.set(pregunta_tag) #método set para asignar manytomany, debemos antes guardar el formulario
+            
             for f in formularioAlternativa:
                 alternativa_texto = f.cleaned_data['texto']
                 alternativa_correcta = f.cleaned_data['es_correcta']
@@ -127,10 +129,22 @@ def preguntas_guardadas_procesar(request):
 def preguntas_editadas(request,unico_pregunta):
     context={}
     context['unico_pregunta']=unico_pregunta
-    FormularioAlternativa = inlineformset_factory(PreguntaModel,AlternativaModel,fields=('texto','es_correcta','enunciado_alternativa'), extra=0,can_delete=False)
+    FormularioAlternativa = inlineformset_factory(
+        PreguntaModel,
+        AlternativaModel,
+        fields=('texto','es_correcta','enunciado_alternativa'), 
+        extra=0,
+        can_delete=False
+    )
     enunciado = PreguntaModel.objects.get(unico_pregunta=unico_pregunta,usuario=request.user)
+    tags = PreguntaModel.objects.filter(unico_pregunta=unico_pregunta).values('tag')
+    context['editar_enunciado_formulario']=CrearPreguntaForm(
+        instance=enunciado,
+        user=request.user,
+        initial={'tag':tags}
+        )
     context['editar_formulario_alternativas'] = FormularioAlternativa(instance=enunciado)
-    context['editar_enunciado_formulario']=EnunciadoForm(instance=enunciado)
+    
     return render(request,'pruebas/editar_pregunta.html',context)
 
 def guardar_pregunta_editada(request):
@@ -138,7 +152,14 @@ def guardar_pregunta_editada(request):
     enunciado = PreguntaModel.objects.get(unico_pregunta=copia['unico'])
     
     if request.method=="POST" and copia['accion']=='Actualizar':
-        FormularioAlternativaClass = inlineformset_factory(PreguntaModel,AlternativaModel,fields=('texto','es_correcta'), extra=0,can_delete=False,formset=PreguntaCompletaFormsetEditada)
+        FormularioAlternativaClass = inlineformset_factory(
+            PreguntaModel,
+            AlternativaModel,
+            fields=('texto','es_correcta'),
+            extra=0,
+            can_delete = False,
+            formset=PreguntaCompletaFormsetEditada
+            )
         Enunciado_desde_form = EnunciadoForm(request.POST, instance=enunciado)
         #Enunciado_desde_form = EnunciadoForm(request.POST)
         formularioAlternativa = FormularioAlternativaClass(request.POST,instance=enunciado)

@@ -78,8 +78,10 @@ class PreguntaCompletaFormset(BaseFormSet):
         for f in self.forms:
             es_correcta = f.cleaned_data.get("es_correcta")
             es_correcta_list.append(es_correcta)
-        if not True in es_correcta_list:
-            raise ValidationError("¡Una y solo una de las alternativas es correcta")
+        if sum(es_correcta_list)==0: #suma los true, que valen 1, si no hay true no se marcó la alternativa correcta
+            raise ValidationError("Falta marcar la alternativa correcta")
+        if sum(es_correcta_list)>1: #si la suma es mayor a 1, hay mas alternativas marcadas
+            raise ValidationError("Hay que marcar solo 1 alternativa como correcta, hay más de una marcada. Ojo.")
                     
 
 class PreguntaCompletaFormsetEditada(BaseInlineFormSet):
@@ -89,8 +91,12 @@ class PreguntaCompletaFormsetEditada(BaseInlineFormSet):
         for f in self.forms:
             es_correcta = f.cleaned_data.get("es_correcta")
             es_correcta_list.append(es_correcta)
-        if not True in es_correcta_list:
-            raise ValidationError("¡Una y solo una de las alternativas es correcta")
+        if sum(es_correcta_list)==0: #suma los true, que valen 1, si no hay true no se marcó la alternativa correcta
+            raise ValidationError("Falta marcar la alternativa correcta")
+        if sum(es_correcta_list)>1: #si la suma es mayor a 1, hay mas alternativas marcadas
+            raise ValidationError("Hay que marcar solo 1 alternativa como correcta, hay más de una marcada. Ojo.")
+        
+
 
 
 

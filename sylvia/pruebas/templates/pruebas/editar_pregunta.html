@@ -9,7 +9,8 @@
 </h3>
 <form action="{% url 'guardar_pregunta_editada' %}" method="post">
     {% csrf_token %}
-    <div class="row">
+    {{ editar_enunciado_formulario.management_form }}
+    <div id="tags" class="row">
         <div class="col-lg-6">
     {{ editar_enunciado_formulario.tag.label }}
         </div>
@@ -18,7 +19,7 @@
         </div>
     </div>
  
-   {{ editar_enunciado_formulario.management_form }}
+
     <div class="row d-flex flex-column">
         <div class="P-2">
             {{ editar_enunciado_formulario.enunciado.label }}
