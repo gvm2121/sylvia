@@ -4,10 +4,10 @@ from django.http import HttpResponse,JsonResponse,FileResponse
 from .models import PreguntaModel,PruebaModel,AlternativaModel
 from pruebas.formularios import *
 from django.contrib.auth.models import User
-import random
 from django.core import serializers
 from .funciones_externas import motor,PreguntaFinal
 import json
+import os
 
 def index(request):
     usuario=request.user
@@ -141,7 +141,9 @@ def preguntas_editadas(request,unico_pregunta):
     context['editar_enunciado_formulario']=CrearPreguntaForm(
         instance=enunciado,
         user=request.user,
-        initial={'tag':tags}
+        # initial={
+        #     'tag':tags
+        # }
         )
     context['editar_formulario_alternativas'] = FormularioAlternativa(instance=enunciado)
     
@@ -149,6 +151,7 @@ def preguntas_editadas(request,unico_pregunta):
 
 def guardar_pregunta_editada(request):
     copia=request.POST.copy()
+    tags = request.POST.getlist("tag")
     enunciado = PreguntaModel.objects.get(unico_pregunta=copia['unico'])
     
     if request.method=="POST" and copia['accion']=='Actualizar':
@@ -218,7 +221,7 @@ def generar_prueba(request):
     
     return render(request,'pruebas/preview-prueba.html',{'contenedor_final':contenedor_final})
 
-import os
+
 def generar_pdf(request):
     prueba = request.session.get('contenedor')
     cantidad_preguntas=prueba['cantidad_preguntas']
@@ -404,3 +407,9 @@ def eliminar_tag(request,tag_id):
     a = TagModel.objects.get(id_tag=tag_id)
     a.delete()
     return redirect('crear_tag')
+
+def api_traer_tag(request,pregunta_numero):
+    """ ESte traería los tag asociados a las preguntas """
+    consulta = PreguntaModel.objects.filter(usuario = request.user,unico_pregunta = pregunta_numero).only('tag')
+    consulta_json = serializers.serialize('json',consulta)
+    return HttpResponse(consulta_json,content_type='application/json')

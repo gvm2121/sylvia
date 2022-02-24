@@ -10,10 +10,12 @@ class CrearPreguntaForm(ModelForm):
         self.user=kwargs.pop('user')
         super(CrearPreguntaForm, self).__init__(*args, **kwargs)
         self.fields['tag'].queryset = TagModel.objects.filter(usuario=self.user)
+    
     class Meta:
         model=PreguntaModel
         exclude=['usuario','alternativa']
         #fields='__all__'
+    
         
         widgets = {
             'tag' : SelectMultiple(attrs={'class':'form-control'}),

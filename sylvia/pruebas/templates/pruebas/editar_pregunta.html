@@ -7,6 +7,7 @@
     {{ editar_enunciado_formulario.non_form_errors }}
 
 </h3>
+<input type="hidden" id="numero_prgunta" value="{{ unico_pregunta }}">
 <form action="{% url 'guardar_pregunta_editada' %}" method="post">
     {% csrf_token %}
     {{ editar_enunciado_formulario.management_form }}
@@ -15,7 +16,7 @@
     {{ editar_enunciado_formulario.tag.label }}
         </div>
         <div class="col-lg-6">
-    {{ editar_enunciado_formulario.tag }}
+            {{ editar_enunciado_formulario.tag }}
         </div>
     </div>
  
@@ -66,4 +67,25 @@
     <input type="hidden" name="unico" value="{{unico_pregunta}}">
     <input type="submit" class="btn btn-success mt-2" name="accion" value="Actualizar">
 </form>
+
+<script>
+var numero_pregunta = document.getElementById("numero_prgunta");
+var direccion = '/dentro/api/v1/' + numero_pregunta.value;
+var listadom2m = document.getElementById('id_tag');
+var opciones = listadom2m.options;
+var opcion_array = Array.from(opciones, o => parseInt(o.value));
+fetch(direccion)
+.then(res => res.json())
+.then(data => {
+    var tags = data[0].fields['tag'];
+    for (var i=0; i < opcion_array.length;i++){
+        if (tags.includes(opcion_array[i])){
+            opciones[i].selected = "selected";
+        } else {
+            console.log('else')
+        };
+    };
+});
+</script>
+
 {% endblock %}

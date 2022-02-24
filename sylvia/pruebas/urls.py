@@ -21,6 +21,7 @@ urlpatterns = [
     path('compartir/usuario/tags', views.guardar_compartidos_vista, name='guardar_compartido'),
     path('compartir/tabla-compartidos', views.tabla_compartidos, name='tabla_compartidos'),
     path('compartir/eliminar-permisos', views.eliminar_permiso, name='eliminar_permiso'),
+    path('api/v1/<str:pregunta_numero>', views.api_traer_tag, name='api_traer_tag'),
     
 
 
