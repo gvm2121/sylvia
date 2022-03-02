@@ -152,7 +152,9 @@ def preguntas_editadas(request,unico_pregunta):
 def guardar_pregunta_editada(request):
     copia=request.POST.copy()
     tags = request.POST.getlist("tag")
+
     enunciado = PreguntaModel.objects.get(unico_pregunta=copia['unico'])
+    enunciado.tag.set(tags)
     
     if request.method=="POST" and copia['accion']=='Actualizar':
         FormularioAlternativaClass = inlineformset_factory(
