@@ -225,6 +225,8 @@ def generar_prueba(request):
 
 
 def generar_pdf(request):
+    #aca habría que poner donde borrar los archivos si es que existen antes de rellenarlos
+    os.system("rm p*.*")
     prueba = request.session.get('contenedor')
     cantidad_preguntas=prueba['cantidad_preguntas']
     archivo_salida = open("prueba.tex","w")

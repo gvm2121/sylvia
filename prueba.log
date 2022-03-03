@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.7.22)  2 MAR 2022 18:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.7.22)  3 MAR 2022 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -563,7 +563,8 @@ Package: multicol 2017/04/11 v1.8q multicolumn formatting (FMi)
 \mult@nat@firstbox=\box63
 \colbreak@box=\box64
 \mc@col@check@num=\count128
-) (./prueba.aux)
+)
+No file prueba.aux.
 \openout1 = `prueba.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 1.
@@ -578,7 +579,6 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 1.
 LaTeX Font Info:    ... okay on input line 1.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 1.
 LaTeX Font Info:    ... okay on input line 1.
-
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
@@ -694,58 +694,29 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 1.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (6.7197pt too wide) in paragraph at lines 1--1
-[]\T1/cmr/bx/n/12 11.- Pel-len-tesque sagit-tis libero vi-tae pu-rus pul-v-inar
- ef-fici-tur. In hac habitasse
- []
-
-[3] [4] [1] [2] [3] [4] [1] [2] [3]
-Overfull \hbox (6.7197pt too wide) in paragraph at lines 1--1
-[]\T1/cmr/bx/n/12 14.- Pel-len-tesque sagit-tis libero vi-tae pu-rus pul-v-inar
- ef-fici-tur. In hac habitasse
- []
-
-[4]
-Overfull \hbox (12.08846pt too wide) in paragraph at lines 1--1
-[]\T1/cmr/m/n/14.4 Pellentesque sagit-tis libero vi-tae pu-rus pul-v-inar ef-fi
-ci-tur. In hac habitasse
- []
-
-[1] [2]
-Overfull \hbox (12.08846pt too wide) in paragraph at lines 1--1
-[]\T1/cmr/m/n/14.4 Pellentesque sagit-tis libero vi-tae pu-rus pul-v-inar ef-fi
-ci-tur. In hac habitasse
- []
-
-[1] [2] [1]
-Overfull \hbox (12.08846pt too wide) in paragraph at lines 1--1
-[]\T1/cmr/m/n/14.4 Pellentesque sagit-tis libero vi-tae pu-rus pul-v-inar ef-fi
-ci-tur. In hac habitasse
- []
-
-[2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [1] [1] [1]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <14.4> on input line 1.
- [1] [1] [1] [1] [1] [1] (./prueba.aux) ) 
+ [1] [1]
+[1] [1] (./prueba.aux) ) 
 Here is how much of TeX's memory you used:
- 23150 strings out of 494923
- 596747 string characters out of 6180742
- 886376 words of memory out of 5000000
+ 23148 strings out of 494923
+ 596725 string characters out of 6180742
+ 866376 words of memory out of 5000000
  26083 multiletter control sequences out of 15000+600000
  9164 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,7n,96p,49617b,751s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/gonzalo/.texlive2017/texmf-var
-/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/gonzalo/.texlive2017/texmf-
-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home/gonzalo/.texlive2017/tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/gonzalo/.texlive2017/
-texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/gonzalo/.texlive20
-17/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk>
-Output written on prueba.pdf (24 pages, 89395 bytes).
+ 62i,7n,96p,10079b,751s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/gonzalo/.texlive2017/texmf-var/fonts/pk/ljfour/
+jknappen/ec/ecrm0900.600pk> </home/gonzalo/.texlive2017/texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/ecrm1440.600pk> </home/gonzalo/.texlive2017/texmf-var/fonts/pk/l
+jfour/jknappen/ec/ecbx1200.600pk> </home/gonzalo/.texlive2017/texmf-var/fonts/p
+k/ljfour/jknappen/ec/ecrm1000.600pk> </home/gonzalo/.texlive2017/texmf-var/font
+s/pk/ljfour/jknappen/ec/ecbx1440.600pk>
+Output written on prueba.pdf (8 pages, 51066 bytes).
 PDF statistics:
- 275 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 195 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
